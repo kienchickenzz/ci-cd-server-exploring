@@ -30,6 +30,9 @@ jobs:
               key: ${{ secrets.SSH_PRIVATE_KEY }}
               port: ${{ secrets.SSH_PORT }}
               script: |
-                  cd "${{ github.event.inputs.directory }}"
+                  # Variables
+                  PROJECT_DIR="${{ github.event.inputs.directory }}"
+
+                  cd "$PROJECT_DIR"
                   ls -la
                   pwd
