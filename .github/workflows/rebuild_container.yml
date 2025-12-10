@@ -1,0 +1,40 @@
+name: Rebuild Server Container
+
+on:
+    workflow_dispatch: # Trigger manually
+        inputs:
+            directory:
+                description: 'Server Directory'
+                required: false
+                default: 'mm-quant-trading-engine'
+                type: string
+            container_name:
+                description: 'Container name to restart'
+                required: false
+                default: 'mm-quant-trading-engine-app-1'
+
+jobs:
+    rebuild-container:
+        runs-on: ubuntu-latest
+        environment: trading_server
+        steps:
+        - name: Rebuild container
+          uses: appleboy/ssh-action@v0.1.5
+          with:
+              host: ${{ secrets.SSH_HOST }}
+              username: ${{ secrets.SSH_USERNAME }}
+              key: ${{ secrets.SSH_PRIVATE_KEY }}
+              port: ${{ secrets.SSH_PORT }}
+              script: |
+                  # Variables
+                  PROJECT_DIR="${{ github.event.inputs.directory }}"
+                  CONTAINER_NAME="${{ github.event.inputs.container_name }}"
+
+                  cd "$PROJECT_DIR"
+
+                  # Pull latest code
+                  git pull new-origin dev
+
+                  # Rebuild container
+                  docker compose up -d --build --no-deps "$CONTAINER_NAME"
+                  docker ps --filter "name=$CONTAINER_NAME"
