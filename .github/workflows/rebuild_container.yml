@@ -28,7 +28,8 @@ jobs:
               script: |
                   # Variables
                   PROJECT_DIR="${{ github.event.inputs.directory }}"
-                  CONTAINER_NAME="${{ github.event.inputs.container_name }}"
+                  CONTAINER="${{ github.event.inputs.container_name }}"
+                  IMAGE="app"
 
                   cd "$PROJECT_DIR"
 
@@ -36,5 +37,5 @@ jobs:
                   git pull new-origin dev
 
                   # Rebuild container
-                  docker compose up -d --build --no-deps "$CONTAINER_NAME"
-                  docker ps --filter "name=$CONTAINER_NAME"
+                  docker compose up -d --build --no-deps "$IMAGE"
+                  docker ps --filter "name=$CONTAINER"
