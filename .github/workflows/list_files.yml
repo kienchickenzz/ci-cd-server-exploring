@@ -14,10 +14,10 @@ jobs:
         - name: SSH into server and list files
           uses: appleboy/ssh-action@v0.1.5
           with:
-              host: ${{ secrets.SSH_HOST }}
-              username: ${{ secrets.SSH_USERNAME }}
-              key: ${{ secrets.SSH_PRIVATE_KEY }}
-              port: ${{ secrets.SSH_PORT }}
+              host: ${{ secrets.trading_server.SSH_HOST }}
+              username: ${{ secrets.trading_server.SSH_USERNAME }}
+              key: ${{ secrets.trading_server.SSH_PRIVATE_KEY }}
+              port: ${{ secrets.trading_server.SSH_PORT }}
               script: |
                   cd mm-quant-trading-engine
                   ls -la
