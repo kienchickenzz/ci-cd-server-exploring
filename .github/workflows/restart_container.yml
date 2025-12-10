@@ -26,6 +26,11 @@ jobs:
               key: ${{ secrets.SSH_PRIVATE_KEY }}
               port: ${{ secrets.SSH_PORT }}
               script: |
-                  cd "${{ github.event.inputs.directory }}"
-                  docker restart "${{ github.event.inputs.container_name }}"
-                  docker ps --filter "name=${{ github.event.inputs.container_name }}"
+                  # Variables
+                  PROJECT_DIR="${{ github.event.inputs.directory }}"
+                  CONTAINER_NAME="${{ github.event.inputs.container_name }}"
+
+                  cd "$PROJECT_DIR"
+
+                  docker restart "$CONTAINER_NAME"
+                  docker ps --filter "name=$CONTAINER_NAME"
