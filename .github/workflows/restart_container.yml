@@ -28,9 +28,9 @@ jobs:
               script: |
                   # Variables
                   PROJECT_DIR="${{ github.event.inputs.directory }}"
-                  CONTAINER_NAME="${{ github.event.inputs.container_name }}"
+                  CONTAINER="${{ github.event.inputs.container_name }}"
 
                   cd "$PROJECT_DIR"
 
-                  docker restart "$CONTAINER_NAME"
-                  docker ps --filter "name=$CONTAINER_NAME"
+                  docker restart "$CONTAINER"
+                  docker ps --filter "name=$CONTAINER"
